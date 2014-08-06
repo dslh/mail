@@ -46,7 +46,7 @@ module Mail
           key_name = "#{key_name}*"
         end
         %Q{#{key_name}=#{quote_token(value)}}
-      end.join(";\r\n\s")
+      end.join(";\s")
     end
 
     def decoded
