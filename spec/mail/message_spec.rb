@@ -1301,14 +1301,14 @@ describe Mail::Message do
         it "should be able to set a content type with an array and hash" do
           mail = Mail.new
           mail.content_type = ["text", "plain", { :charset => 'US-ASCII' }]
-          expect(mail[:content_type].encoded).to eq %Q[Content-Type: text/plain;\r\n\scharset=US-ASCII\r\n]
+          expect(mail[:content_type].encoded).to eq %Q[Content-Type: text/plain;\scharset=US-ASCII\r\n]
           expect(mail.content_type_parameters).to eql({"charset" => "US-ASCII"})
         end
 
         it "should be able to set a content type with an array and hash with a non-usascii field" do
           mail = Mail.new
           mail.content_type = ["text", "plain", { :charset => 'UTF-8' }]
-          expect(mail[:content_type].encoded).to eq %Q[Content-Type: text/plain;\r\n\scharset=UTF-8\r\n]
+          expect(mail[:content_type].encoded).to eq %Q[Content-Type: text/plain;\scharset=UTF-8\r\n]
           expect(mail.content_type_parameters).to eql({"charset" => "UTF-8"})
         end
 
