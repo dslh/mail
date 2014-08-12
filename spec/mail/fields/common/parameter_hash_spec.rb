@@ -61,7 +61,7 @@ describe Mail::ParameterHash do
     hash.merge!({'value*0*' => "us-ascii'en'This%20is%20even%20more%20",
                  'value*1*' => "%2A%2A%2Afun%2A%2A%2A%20",
                  'value*2'  => "isn't it"})
-    expect(hash.encoded).to eq %Q{value*0*=us-ascii'en'This%20is%20even%20more%20;\svalue*1*=%2A%2A%2Afun%2A%2A%2A%20;\svalue*2="isn't it"}
+    expect(hash.encoded).to eq %Q{value*0*=us-ascii'en'This%20is%20even%20more%20;\r\n\svalue*1*=%2A%2A%2Afun%2A%2A%2A%20;\r\n\svalue*2="isn't it"}
   end
 
 end

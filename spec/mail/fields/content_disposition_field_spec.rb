@@ -28,7 +28,7 @@ describe Mail::ContentDispositionField do
 
     it "should render encoded" do
       c = Mail::ContentDispositionField.new('Content-Disposition: attachment; filename=File')
-      expect(c.encoded).to eq "Content-Disposition: attachment;\sfilename=File\r\n"
+      expect(c.encoded).to eq "Content-Disposition: attachment;\r\n\sfilename=File\r\n"
     end
 
     it "should render encoded for inline" do

@@ -99,12 +99,12 @@ describe Mail::ContentTypeField do
 
     it "should render encoded with parameters" do
       c = Mail::ContentTypeField.new('text/plain; charset=US-ASCII; format=flowed')
-      expect(c.encoded).to eq %Q{Content-Type: text/plain;\scharset=US-ASCII;\sformat=flowed\r\n}
+      expect(c.encoded).to eq %Q{Content-Type: text/plain;\r\n\scharset=US-ASCII;\r\n\sformat=flowed\r\n}
     end
 
     it "should render quoted values encoded" do
       c = Mail::ContentTypeField.new('text/plain; example="foo bar"')
-      expect(c.encoded).to eq %Q{Content-Type: text/plain;\sexample="foo bar"\r\n}
+      expect(c.encoded).to eq %Q{Content-Type: text/plain;\r\n\sexample="foo bar"\r\n}
     end
 
     it "should render decoded" do
@@ -135,8 +135,8 @@ describe Mail::ContentTypeField do
     end
 
     it "should only wrap filenames in double quotation marks" do
-      c = Mail::ContentTypeField.new("image/jpg;\sname=some .jpg\r\n\ssize=100")
-      expect(c.value).to eq %Q{image/jpg;\sname="some .jpg"\r\n\ssize=100}
+      c = Mail::ContentTypeField.new("image/jpg;\r\n\sname=some .jpg\r\n\ssize=100")
+      expect(c.value).to eq %Q{image/jpg;\r\n\sname="some .jpg"\r\n\ssize=100}
     end
   end
 
@@ -187,12 +187,12 @@ describe Mail::ContentTypeField do
   describe "class methods" do
     it "should give back an initialized instance with a unique boundary" do
       boundary = Mail::ContentTypeField.with_boundary('multipart/mixed')
-      expect(boundary.encoded).to match(%r{Content-Type: multipart/mixed;\sboundary="--==_mimepart_[\w]+_[\w]+"\r\n})
+      expect(boundary.encoded).to match(%r{Content-Type: multipart/mixed;\r\n\sboundary="--==_mimepart_[\w]+_[\w]+"\r\n})
     end
 
     it "should give back an initialized instance with different type with a unique boundary" do
       boundary = Mail::ContentTypeField.with_boundary('multipart/alternative')
-      expect(boundary.encoded).to match(%r{Content-Type: multipart/alternative;\sboundary="--==_mimepart_[\w]+_[\w]+"\r\n})
+      expect(boundary.encoded).to match(%r{Content-Type: multipart/alternative;\r\n\sboundary="--==_mimepart_[\w]+_[\w]+"\r\n})
     end
 
     it "should give unique boundaries" do
@@ -649,13 +649,13 @@ describe Mail::ContentTypeField do
       case
       when RUBY_VERSION >= '1.9.3'
         string.force_encoding('SJIS')
-        result = %Q{Content-Type: application/octet-stream;\sfilename*=windows-31j'jp'01%20Quien%20Te%20Dij%91%61t.%20Pitbull.mp3\r\n}
+        result = %Q{Content-Type: application/octet-stream;\r\n\sfilename*=windows-31j'jp'01%20Quien%20Te%20Dij%91%61t.%20Pitbull.mp3\r\n}
       when RUBY_VERSION >= '1.9'
         string.force_encoding('SJIS')
-        result = %Q{Content-Type: application/octet-stream;\sfilename*=shift_jis'jp'01%20Quien%20Te%20Dij%91%61t.%20Pitbull.mp3\r\n}
+        result = %Q{Content-Type: application/octet-stream;\r\n\sfilename*=shift_jis'jp'01%20Quien%20Te%20Dij%91%61t.%20Pitbull.mp3\r\n}
       else
         $KCODE = 'SJIS'
-        result = %Q{Content-Type: application/octet-stream;\sfilename*=sjis'jp'01%20Quien%20Te%20Dij%91at.%20Pitbull.mp3\r\n}
+        result = %Q{Content-Type: application/octet-stream;\r\n\sfilename*=sjis'jp'01%20Quien%20Te%20Dij%91at.%20Pitbull.mp3\r\n}
       end
       c.filename = string
       expect(c.parameters).to eql({"filename" => string})
