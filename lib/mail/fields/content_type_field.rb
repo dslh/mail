@@ -110,7 +110,7 @@ module Mail
     # TODO: Fix this up
     def encoded
       if parameters.length > 0
-        p = ";\s#{parameters.encoded}"
+        p = ";\r\n\s#{parameters.encoded}"
       else
         p = ""
       end
