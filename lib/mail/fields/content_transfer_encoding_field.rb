@@ -33,7 +33,11 @@ module Mail
     
     # TODO: Fix this up
     def encoded
-      "#{CAPITALIZED_FIELD}: #{encoding}\r\n"
+      if encoding == '7bit'
+        ''
+      else
+        "#{CAPITALIZED_FIELD}: #{encoding}\r\n"
+      end
     end
     
     def decoded

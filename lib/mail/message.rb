@@ -2044,7 +2044,7 @@ module Mail
       add_multipart_mixed_header    if body.multipart?
       add_content_type              unless has_content_type?
       add_charset                   unless has_charset?
-      add_content_transfer_encoding unless has_content_transfer_encoding?
+#add_content_transfer_encoding unless has_content_transfer_encoding?
     end
 
     def add_required_message_fields
